@@ -1,4 +1,4 @@
-module github.com/jdy879526487/cfg
+module github.com/jdy879526487/coord-cfg
 
 go 1.15
 

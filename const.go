@@ -1,4 +1,4 @@
-package cfg
+package coord_cfg
 
 const (
 	// yaml配置文件 环境变量键名

@@ -1,7 +1,8 @@
-package cfg
+package coord_cfg
 
 import (
 	"encoding/json"
+	"log"
 	"strings"
 )
 
@@ -20,4 +21,11 @@ func StandCode(code string) string {
 func Json(v interface{}) string {
 	b, _ := json.Marshal(v)
 	return string(b)
+}
+
+
+func checkError(err error) {
+	if err != nil {
+		log.Fatal("Fatal error ", err.Error())
+	}
 }

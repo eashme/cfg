@@ -1,4 +1,4 @@
-package cfg
+package coord_cfg
 
 import (
 	"fmt"
@@ -53,21 +53,13 @@ func Yaml2Map(data3 []byte) map[string]interface{} {
 	stKeys = stKeys0
 
 	m := make(map[string]interface{})
-
-	err := yaml.Unmarshal(data3, &m)
-	checkError(err)
+	checkError(yaml.Unmarshal(data3, &m))
 	for k, v := range m {
 		currentKey = k
 		stKeys.Push(currentKey)
 		extract(v)
 	}
 	return mKeys
-}
-
-func checkError(err error) {
-	if err != nil {
-		log.Fatal("Fatal error ", err.Error())
-	}
 }
 
 func extract(obj interface{}) interface{} {

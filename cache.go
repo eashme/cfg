@@ -1,1 +1,1 @@
-package cfg
+package coord_cfg
