@@ -7,6 +7,7 @@ import (
 )
 
 // 配置文件 code 的标准命名,存DB和程序运行中都存储的该命名
+//  最终目标 server.env => SERVER_ENV
 func StandCode(code string) string {
 	return strings.TrimSpace( // 去除空格
 		strings.ToUpper( // 转大写

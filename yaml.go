@@ -17,10 +17,10 @@ var (
 )
 
 // 获取 K V yaml文件配置值
-func GetYamlK(k string) interface{} {
+func getFromYaml(k string) interface{} {
 	yamlOnce.Do(func() {
 		// 获取yaml 配置文件路径
-		fn := GetEnv(YamlFileEnvKey)
+		fn := getFromEnv(YamlFileEnvKey)
 		if fn == "" {
 			fn = YamlDefaultPath
 		}
