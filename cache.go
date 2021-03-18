@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/go-redis/redis/v8"
 	mem "github.com/patrickmn/go-cache"
+	"strconv"
 	"sync"
 )
 
@@ -17,24 +18,38 @@ var (
 )
 
 // redis
-func connRedis(ctx context.Context, host string, port uint16, pwd string, db int) error {
+func connRedis(ctx context.Context, host, port, pwd, db string) error {
+	i, _ := strconv.Atoi(db)
 	redisCli = redis.NewClient(&redis.Options{
 		Addr:     fmt.Sprintf("%s:%d", host, port),
 		Password: pwd,
-		DB:       db,
+		DB:       i,
 	})
 	return redisCli.Ping(ctx).Err()
 }
 
 func getFromRedis(ctx context.Context, k string) string {
-	return redisCli.Get(ctx, k).String()
+	if redisCli == nil { // 如果redis未进行初始化,则不做操作
+		return ""
+	}
+	res := redisCli.Get(ctx, k)
+	if res.Err() != nil {
+		return ""
+	}
+	return res.String()
 }
 
 func set2Redis(ctx context.Context, k, v string) error {
+	if redisCli == nil { // 如果redis未进行初始化,则不做操作
+		return fmt.Errorf("not init redis ")
+	}
 	return redisCli.Set(ctx, k, v, DefaultCacheTime).Err()
 }
 
-func cleanRedis(ctx context.Context, k string) error{
+func cleanRedis(ctx context.Context, k string) error {
+	if redisCli == nil { // 如果redis未进行初始化,则不做操作
+		return fmt.Errorf("not init redis ")
+	}
 	return redisCli.Del(ctx, k).Err()
 }
 

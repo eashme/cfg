@@ -5,6 +5,28 @@ import (
 	"log"
 )
 
+func init() {
+	ctx := context.Background()
+	// 连接db
+	err := connDB(Get(ctx, MysqlUserKey, DefaultMYSQLUser),
+		Get(ctx, MysqlPwdKey, DefaultMYSQLPwd),
+		Get(ctx, MysqlHostKey, DefaultMYSQLHost),
+		Get(ctx, MysqlPortKey, DefaultMYSQLPort),
+		Get(ctx, MysqlDBKey, DefaultMYSQLDB))
+	if err != nil {
+		log.Print("failed connect db", err)
+	}
+	// 连接 redis
+	err = connRedis(ctx,
+		Get(ctx, RedisHostKey, DefaultRedisHost),
+		Get(ctx, RedisPortKey, DefaultRedisPort),
+		Get(ctx, RedisPwdKey, DefaultRedisPwd),
+		Get(ctx, RedisDBKey, DefaultRedisDB))
+	if err != nil {
+		log.Print("failed connect redis ", err)
+	}
+}
+
 // 读取环境变量逻辑
 func Get(ctx context.Context, k string, defaultV ...string) (v string) {
 	// 读内存缓存

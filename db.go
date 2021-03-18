@@ -24,11 +24,11 @@ type Config struct {
 }
 
 var (
-	eg xorm.EngineInterface
+	eg *xorm.Engine
 )
 
-func connDB(user, pwd, host string, port uint16, db string) (err error) {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8", user, pwd, host, port, db)
+func connDB(user, pwd, host string, port string, db string) (err error) {
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8", user, pwd, host, port, db)
 	eg, err = xorm.NewEngine("mysql", dsn)
 	if err != nil {
 		return err
@@ -52,6 +52,10 @@ func connDB(user, pwd, host string, port uint16, db string) (err error) {
 }
 
 func getFromDB(ctx context.Context, k string) string {
+	if eg == nil {
+		return ""
+	}
+
 	ses := eg.NewSession().Context(ctx)
 	defer ses.Close()
 
@@ -67,6 +71,10 @@ func getFromDB(ctx context.Context, k string) string {
 }
 
 func set2DB(ctx context.Context, k string, v string, remark ...string) error {
+	if eg == nil {
+		return fmt.Errorf("not init db ")
+	}
+
 	ses := eg.NewSession().Context(ctx)
 	defer ses.Close()
 

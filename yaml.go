@@ -34,6 +34,9 @@ func getFromYaml(k string) string {
 		log.Printf("[yaml cfg] %s", Json(yamlCache))
 	})
 	v, _ := yamlCache[StandCode(k)]
+	if v == nil{
+		return ""
+	}
 	return fmt.Sprintf("%v", v)
 }
 

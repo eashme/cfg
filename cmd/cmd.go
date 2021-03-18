@@ -31,19 +31,20 @@ func main() {
 	// 注册服务
 	proto.RegisterConfigServiceServer(s, &CfgService{})
 
-	grpcLs, err := net.Listen("tcp", grpcAddr)
+	ls, err := net.Listen("tcp", grpcAddr)
 	if err != nil {
 		log.Fatalf("failed listen %s %v", grpcAddr, err)
 	}
 
 	log.Printf("grpc server running on %s ...", grpcAddr)
 	go func() {
-		err = s.Serve(grpcLs)
+		err = s.Serve(ls)
 		if err != nil {
 			log.Fatalf("failed serve grpc %v", err)
 		}
 	}()
 
+	// grpc gateway 网关服务
 	grpcGateway(ctx, grpcAddr)
 }
 
