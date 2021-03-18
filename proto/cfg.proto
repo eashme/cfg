@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package protocol.wallet.account;
+option go_package = "github.com/jdy879526487/coord-cfg/proto";
+
+service ConfigService {
+    // 获取配置
+    rpc GetConfig(GetCfgReq) returns (GetCfgRsp) {}
+    // 设置配置
+    rpc SetConfig(SetCfgReq) returns (SetCfgRsp) {}
+}
+
+message GetCfgReq {
+    // 请求的配置文件代码
+    string Code = 1;
+}
+
+message GetCfgRsp{
+    string Code = 1;
+    // 请求的配置文件值
+    string Value = 2;
+}
+
+message SetCfgReq {
+    string Code = 1;
+    string Value = 2;
+}
+
+message SetCfgRsp {}
