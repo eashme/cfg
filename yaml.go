@@ -17,7 +17,7 @@ var (
 )
 
 // 获取 K V yaml文件配置值
-func getFromYaml(k string) interface{} {
+func getFromYaml(k string) string {
 	yamlOnce.Do(func() {
 		// 获取yaml 配置文件路径
 		fn := getFromEnv(YamlFileEnvKey)
@@ -34,7 +34,7 @@ func getFromYaml(k string) interface{} {
 		log.Printf("[yaml cfg] %s", Json(yamlCache))
 	})
 	v, _ := yamlCache[StandCode(k)]
-	return v
+	return fmt.Sprintf("%v", v)
 }
 
 type I interface{}
