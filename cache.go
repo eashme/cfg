@@ -1,4 +1,4 @@
-package coord_cfg
+package cfg
 
 import (
 	"context"

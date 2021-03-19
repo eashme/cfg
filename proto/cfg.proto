@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package protocol.wallet.account;
-option go_package = "github.com/jdy879526487/coord-cfg/proto";
+option go_package = "github.com/jdy879526487/cfg/proto";
 
 service ConfigService {
     // 获取配置
