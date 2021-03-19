@@ -48,6 +48,11 @@ func connDB(user, pwd, host string, port string, db string) (err error) {
 		log.Printf("failed ping databases %s  err:%v", dsn, err)
 		return err
 	}
+	// 同步配置文件表
+	err = eg.Sync2(&Config{})
+	if err != nil {
+		log.Print("failed sync config ", err)
+	}
 	return nil
 }
 
